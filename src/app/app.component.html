@@ -1,0 +1,22 @@
+<nav class="Navbar-row-one clearfix">
+  <div>
+  <ul>
+  <li><a routerLink=''> &nbsp; Storefront Operations</a></li>
+  <li ><a routerLink='/inbox' [routerLinkActive]="['nav-1-active']">Inbox</a></li>
+  <li ><a routerLink='/stores' [routerLinkActive]="['nav-1-active']">Stores</a></li>
+  <li ><a routerLink='merchandise' [routerLinkActive]="['nav-1-active']">Merchandise</a></li>
+  <li><a routerLink='admin' [routerLinkActive]="['nav-1-active']">Admin</a></li>
+  </ul>
+  <ul class="Navbar-right-one">
+  <li><a (click)="showDropDownFunction()" class="dropbtn">&#9662;</a>
+    <div class="dropdown-content" *ngIf="showDropDown"> 
+      <a>Help</a>
+      <a>Logout</a>
+    </div>
+  </li>
+  <li><a>SFO SUPERADMIN</a></li>
+  <li><a>+</a></li>
+  </ul>
+  </div>
+  </nav>
+  <router-outlet></router-outlet>

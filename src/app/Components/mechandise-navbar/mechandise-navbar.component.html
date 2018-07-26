@@ -1,0 +1,15 @@
+<nav class="navbar-two clearfix">
+  <div>
+    <a routerLink='2D-elements' [routerLinkActive]="['nav-2-active']">2D Elements</a>
+    <a routerLink='3D-elements' [routerLinkActive]="['nav-2-active']">3D Elements</a>
+    <a routerLink='anciliary-elements' [routerLinkActive]="['nav-2-active']">Anciliary Elements</a>
+    <a routerLink='demo-elements' [routerLinkActive]="['nav-2-active']">Demo Elements</a>
+    <a routerLink='fixture-library' [routerLinkActive]="['nav-2-active']">Fixture Library</a>
+    <a routerLink='kits' [routerLinkActive]="['nav-2-active']">Kits</a>
+    <a routerLink='master-data' [routerLinkActive]="['nav-2-active']">Master Data</a>
+  <input class="navbar-two-input" 
+        placeholder="Search Stores Programs"
+        style="float: right;"/>
+  </div>
+</nav>
+<router-outlet></router-outlet>

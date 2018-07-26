@@ -1,0 +1,12 @@
+
+<nav class="navbar-two clearfix">
+  <div>
+    <a routerLink="pending-actions" [routerLinkActive]="['nav-2-active']">Pending Actions</a>
+    <a routerLink="pending-notifications" [routerLinkActive]="['nav-2-active']">Pending Notifications</a>
+    <a routerLink="completed-actions" [routerLinkActive]="['nav-2-active']">Completed Actions</a>
+  <input class="navbar-two-input" 
+        placeholder="Search Stores Programs"
+        style="float: right;"/>
+  </div>
+</nav>
+<router-outlet></router-outlet>

@@ -1,0 +1,55 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+.navbar-two {
+    background-color: rgba(192,192,192,0.3);
+    width: 102%;
+    position: relative;
+    top: 42px;
+    left: -8px;
+    padding-top: 15px;
+    font-size: 14px;
+    overflow: hidden;
+}
+.navbar-two a{
+    float: left;
+    list-style-type: none;
+    padding-right: 20px;
+    padding-left: 20px;
+    color: #999;
+    font-family: Helvetica, Arial, sans-serif;
+    text-decoration: none;
+}
+.navbar-two a:hover{
+    color: black;
+    cursor: pointer;
+}
+.navbar-two-input{
+    padding: 5px;
+    border-radius: 20px;
+    float: right;
+    font-size: 15px;
+    position: relative;
+    right: 20px;
+    top: -4px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+    
+  }
+  .nav-1-active{
+    color: white!important;
+}
+.nav-2-active{
+    color: black!important;
+}
+.table-scroll .ui-table .ui-table-tbody > tr > th,
+.table-scroll .ui-table .ui-table-tbody > tr > td{
+    overflow: hidden;
+    /* word-wrap: break-word; */
+    text-overflow: ellipsis;
+    line-height: 12px;
+    font-size: 12px;
+}

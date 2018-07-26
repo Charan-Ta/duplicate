@@ -1,0 +1,11 @@
+<nav class="navbar-two clearfix">
+  <div>
+    <a routerLink="users" [routerLinkActive]="['nav-2-active']">Users</a>
+    <a routerLink="audit-trail" [routerLinkActive]="['nav-2-active']">Audit Trail</a>
+    <a routerLink="workflow" [routerLinkActive]="['nav-2-active']">Workflow</a>
+  <input class="navbar-two-input" 
+        placeholder="Search Stores Programs"
+        style="float: right;"/>
+  </div>
+</nav>
+<router-outlet></router-outlet>
