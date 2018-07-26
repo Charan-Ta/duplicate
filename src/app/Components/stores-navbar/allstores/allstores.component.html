@@ -5,19 +5,17 @@
         <thead>
             <tr>
                 <th *ngFor="let heading of _tableHeadingNames">
-                    <span class="ui-column-resizer" (mousedown)="onMouseDown($event)"></span>
-                    <span>{{ heading }}</span>
                     <span (click)="sortBy(heading,'asc')" style="cursor: pointer;">&#x23f7;</span>
                     <span (click)="sortBy(heading,'des')" style="cursor: pointer;">&#x23f6;</span>
+                    <span class="ui-column-resizer" (mousedown)="onMouseDown($event)"></span>
+                    <span>{{ heading }}</span>
                 </th>
             </tr>
         </thead>
-        <tbody class="table-body">
+        <tbody  class="table-body">
             <tr *ngFor="let store of stores" id="bg">
                 <td *ngFor="let heading of _tableHeadingNames">
-                    <div class="table_content">
                         <a href="#">{{store[heading]}}</a>
-                    </div>
                 </td>
             </tr>
         </tbody>
