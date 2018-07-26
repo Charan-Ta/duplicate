@@ -5,19 +5,14 @@ const mongoose = require('mongoose');
 const Store = require('../models/store');
 
 router.get('/',(req, res, next)=>{
-    const limit= Number(req.query.limit);
-    console.log(req.query.limit);
-    sorting = req.query.sortBy;
-    console.log(sorting);
-    sortdir = req.query.sortDir;
+    var limit= Number(req.query.limit);
+    var sorting = req.query.sortBy;
+    var sortdir = req.query.sortDir;
     var startFrom = Number(req.query.startFrom);
-    console.log(req.query.startFrom);
-    console.log('helllo');
     Store.find()
     .exec()
     .then(docs=>{
         if(sortdir=='asc'){
-        console.log(docs.length);
         docs.sort(function(a, b){
             if (a[sorting].toLowerCase()<b[sorting].toLowerCase())
             return -1;
@@ -25,16 +20,17 @@ router.get('/',(req, res, next)=>{
             return 1;
             return 0;
         });
-    }else if(sortdir=='desc'){
+    }else if(sortdir=='des'){
+    docs.sort(function(a, b){
         if (a[sorting].toLowerCase()<b[sorting].toLowerCase())
             return 1;
             if (a[sorting].toLowerCase()>b[sorting].toLowerCase())
             return -1;
             return 0;
+    });
     }
         if((limit+startFrom)<=docs.length){
         docx = docs.slice(startFrom,limit+startFrom);
-        console.log(docx.length);
         res.status(200).json(docx);
         }else{
             docx=docs.slice(startFrom,docs.length);
@@ -42,7 +38,6 @@ router.get('/',(req, res, next)=>{
         }
     })
     .catch(err =>{
-        console.log(err);
         res.status(500).json({
             error: err
         })

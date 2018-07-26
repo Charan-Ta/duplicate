@@ -1,87 +1,89 @@
 #infinite-scroller {
-    height: 500px;
-    width: 700px;
+    height: 450px;
+    width: 100%;
     overflow: scroll;
     padding: 0;
     list-style: none;
     position: relative;
-  }
-  
-  #infinite-scroller thead th,
-  #infinite-scroller tbody tr td
-  {
-    padding: 15px;
-    border: 1px solid #CCC;
+    margin-top: 120px;
+}
+
+#infinite-scroller table {
     border-collapse: collapse;
-  }
-  .stores-table{
-    margin-top: 150px;
 }
-.stores-table1{
-margin-top: 0px;
-max-height: 550px;
-overflow-y: scroll;
+
+
+#infinite-scroller thead tr th {
+    padding: 2px 15px;
 }
-.stores-headings{
-position: fixed;
-margin-top: -24px;
+
+#infinite-scroller tbody tr:hover {
+    cursor: pointer;
 }
-#allstores-title{
-position: absolute;
-top: 100px;
-left: 100px;
+
+#infinite-scroller thead tr th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+    padding: 0px 5px;
+    color: #6f6f6f;
+    font-size: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: relative;
 }
-table {
-border-collapse: collapse;
-width: 100%;
-table-layout: fixed!important;
+
+#infinite-scroller tbody tr td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
-tr:hover{
-cursor: pointer;
+
+#infinite-scroller table a {
+    color: #6f6f6f;
+    text-decoration: none;
+    font-size: 15px;
 }
-._header{
-/* width: 110px; */
-white-space: nowrap;
-text-overflow: ellipsis;
-overflow: hidden;
-padding: 2px 0;
-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+#infinite-scroller thead tr th span.ui-column-resizer {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    width: 8px;
+    height: 100%;
+    padding: 0;
+    cursor: e-resize;
+    border: 1px solid transparent;
 }
-.table_content{
-width: 110px;
-white-space: nowrap;
-text-overflow: ellipsis;
-overflow: hidden
-}
-th {
-border: 1px solid #dddddd;
-text-align: center;
-font-family: Helvetica, Arial, sans-serif;
-padding: 0px 5px;
-overflow: auto;
-color: #6f6f6f;
-font-size: 15px;
-width: 100%;
-}
-td{
-border: 1px solid #dddddd;
-text-align: center;
-width: 110px;
-}
-table a{
-color: #6f6f6f;
-text-decoration: none;
-font-size: 15px;
-}
+
+
 #bg:nth-child(even) {
-background-color: #E0EBEF!important;
+    background-color: #E0EBEF!important;
 }
-.allstore-search{
-position: absolute;
-top: 120px;
-width: 600px;
+
+.allstore-search {
+    position: absolute;
+    top: 120px;
+    width: 600px;
 }
-.store-heading{
-position: fixed;
-margin-top: -23px
+
+.store-heading {
+    position: fixed;
+    margin-top: -23px
+}
+
+.stores-headings {
+    position: fixed;
+    margin-top: -24px;
+}
+
+#allstores-title {
+    position: absolute;
+    top: 100px;
+    left: 100px;
 }

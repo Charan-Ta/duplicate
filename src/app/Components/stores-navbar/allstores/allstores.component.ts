@@ -17,7 +17,10 @@ export class AllstoresComponent implements OnInit {
   public parameters;
   public _tableHeadingNames;
   public count = 0;
-
+  public start;
+  public pressed;
+  public startX;
+  public startWidth ;
   constructor(private renderer: Renderer,
     private _storesservice: StoresServiceService,
     private _route: ActivatedRoute,
@@ -81,19 +84,40 @@ export class AllstoresComponent implements OnInit {
     this._router.navigate([], { queryParams: this.parameters });
     this.stores = this.stores.concat(datasource);
 
-
-
   }
-  // sortBy(heading, order) {
-  //   this.parameters = {
-  //     limit: 50, sortBy: heading, sortDir: order,
-  //     startFrom: 0
-  //   };
-  //   this.stores = [];
 
-  //   // this._router.navigate([],{queryParams:this.parameters});
-  //   // console.log('test');
-  //   // this.getRouteParams();
+  private onMouseDown(event){
+  this.start = event.target;
+  this.pressed = true;
+  this.startX = event.x;
+  this.startWidth = $(this.start).parent().width();
+  this.initResizableColumns();
+  }
 
-  // }
+  private initResizableColumns() {
+     this.renderer.listenGlobal('body', 'mousemove', (event) => {
+        if(this.pressed) {
+           let width = this.startWidth + (event.x - this.startX);
+           $(this.start).parent().css({'min-width': width, 'max-width': width});
+           let index = $(this.start).parent().index() + 1;
+           $('.table-body tr td:nth-child(' + index + ')').css({'min-width': width, 'max-width': width});
+        }
+     });
+     this.renderer.listenGlobal('body', 'mouseup', (event) => {
+     if(this.pressed) {
+         this.pressed = false;
+     }
+   });
+}
+  sortBy(heading, order) {
+    this.parameters = {
+      limit: 50, sortBy: heading, sortDir: order, startFrom: 0
+    };
+    this.stores = [];
+    this.count=1;
+    this._router.navigate([],{queryParams:this.parameters});
+    this._storesservice.getStores(this.parameters).subscribe(res=>{
+      this.stores= this.stores.concat(res);
+    });
+  }
 }

@@ -1,29 +1,26 @@
 <h3 id="allstores-title">All Stores</h3>
 <input class="navbar-two-input allstore-search" placeholder="Select Category" style="float: right;" />
-<table class="stores-table">
-  <thead>
-    <tr>
-      <th *ngFor="let heading of _tableHeadingNames">
-        <div class="_header">
-          {{heading}}
-          <!-- <span (click)="sortBy(heading,'asc')">&#x25BE;</span>
-          <span (click)="sortBy(heading,'desc')">&#x25BE;</span> -->
-        </div>
-      </th>
-    </tr>
-  </thead>
-</table>
-<div class="stores-table1" appPaginationScroll scrollPercent="70" [immediateCallback]="true" [scrollCallback]="scrollCallback">
-  <table>
-    <tbody class="table-body">
-      <tr *ngFor="let store of stores" id="bg">
-        <td *ngFor="let heading of _tableHeadingNames">
-          <div class="table_content">
-            <a href="#">{{store[heading]}}</a>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="stores-table" id="infinite-scroller" appPaginationScroll scrollPercent="70" [immediateCallback]="true" [scrollCallback]="scrollCallback">
+    <table>
+        <thead>
+            <tr>
+                <th *ngFor="let heading of _tableHeadingNames">
+                    <span class="ui-column-resizer" (mousedown)="onMouseDown($event)"></span>
+                    <span>{{ heading }}</span>
+                    <span (click)="sortBy(heading,'asc')" style="cursor: pointer;">&#x23f7;</span>
+                    <span (click)="sortBy(heading,'des')" style="cursor: pointer;">&#x23f6;</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="table-body">
+            <tr *ngFor="let store of stores" id="bg">
+                <td *ngFor="let heading of _tableHeadingNames">
+                    <div class="table_content">
+                        <a href="#">{{store[heading]}}</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <p>Total Results : {{stores.length}} </p>
