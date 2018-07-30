@@ -6,18 +6,41 @@
     height: 400px;
     overflow: auto;
 }
-.divTable{
-    display: table;
-	width: 100%;
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+    background-color: #F5F5F5;
 }
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #555;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+.divTable {
+    display: table;
+    width: 100%;
+}
+
 .divTableRow {
     display: table-row;
 }
+
 .divTableHeading {
     background-color: #EEE;
-	display: table-header-group;
+    display: table-header-group;
 }
-.divTableCell, .divTableHead {
+
+.divTableCell,
+.divTableHead {
     border: 1px solid #999999;
     display: table-cell;
     text-align: center;
@@ -26,21 +49,24 @@
     text-overflow: ellipsis;
     min-width: 100px;
     max-width: 100px;
-	padding: 3px 10px;
+    padding: 3px 10px;
     position: relative;
 }
+
 .divTableHeading {
     background-color: #EEE;
-	display: table-header-group;
-	font-weight: bold;
+    display: table-header-group;
+    font-weight: bold;
 }
+
 .divTableFoot {
     background-color: #EEE;
-	display: table-footer-group;
-	font-weight: bold;
+    display: table-footer-group;
+    font-weight: bold;
 }
+
 .divTableBody {
-	display: table-row-group;
+    display: table-row-group;
 }
 
 .divTableHead span.ui-column-resizer {
@@ -60,12 +86,13 @@
     background-color: #E0EBEF!important;
 }
 
-.table-header{
-    margin-top: 120px; 
-    max-width:100%; 
+.table-header {
+    margin-top: 120px;
+    max-width: 100%;
     overflow: scroll;
     display: block;
 }
-.table-header::-webkit-scrollbar{
+
+.table-header::-webkit-scrollbar {
     display: none;
 }

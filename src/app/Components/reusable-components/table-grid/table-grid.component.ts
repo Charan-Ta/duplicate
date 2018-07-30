@@ -21,6 +21,7 @@ export class TableGridComponent implements OnInit, OnChanges {
   public startWidth ;
   public parameters;
   public _tableHeadingNames;
+  public sortOrder=[];
   public count = 0;
   constructor(private renderer: Renderer,private _storesservice:StoresServiceService,
     private _route: ActivatedRoute,
@@ -29,25 +30,13 @@ export class TableGridComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.getRouteParams();
   }
 
   public getRouteParams() {
     this._route.queryParams.subscribe(params => {
       this.parameters = params;
-      this.attachDataListener();
     });
-  }
-
-  attachDataListener(){
-    this.serviceCall[this.functionCall](this.parameters).subscribe(res=>{
-      
-    if (!this._tableHeadingNames) {
-      this._tableHeadingNames = Object.keys(res[0]);
-      this._tableHeadingNames = this._tableHeadingNames.splice(1, this._tableHeadingNames.length - 2);
-    }
-      this.tableData= this.tableData.concat(res);
-    });
+    return this.parameters;
   }
 
   ngOnChanges(changes:{[propKey: string]:SimpleChange}){
@@ -68,40 +57,37 @@ export class TableGridComponent implements OnInit, OnChanges {
   }
 
   public getTableDetails(): Observable<any> | any {
-      return this.serviceCall[this.functionCall](this.parameters).do(this.processData);
+      return this.serviceCall[this.functionCall](this.getRouteParams()).do(this.processData);
   }
 
   public processData = (datasource) => {
-    this.count = this.count + 1;
-    if (this.count == 1) {
-      this.parameters = {
+    
+    if (!this._tableHeadingNames) {
+      this._tableHeadingNames = Object.keys(datasource[0]);
+      this._tableHeadingNames = this._tableHeadingNames.splice(1, this._tableHeadingNames.length - 2);
+      for(let i=0;i<this._tableHeadingNames.length;i++){
+        this.sortOrder.push(true);
+      }
+    }
+    this.parameters = {
         limit: 50,
         sortBy: this.parameters.sortBy,
         sortDir: this.parameters.sortDir,
         startFrom: Number(this.parameters['limit']) + Number(this.parameters['startFrom'])
       };
-    }
-    else if (this.count>1 && (this.parameters.startFrom == (this.tableData.length - this.parameters.limit))) {
-      this.parameters = {
-        limit: 50,
-        sortBy: this.parameters.sortBy,
-        sortDir: this.parameters.sortDir,
-        startFrom: Number(this.parameters['limit']) + Number(this.parameters['startFrom'])
-      };
-    } else {
-      const Final_startFrom = this.parameters.startFrom;
-      this.parameters = {
-        limit: 50,
-        sortBy: this.parameters.sortBy,
-        sortDir: this.parameters.sortDir,
-        startFrom: Final_startFrom
-      };
-    }
-    this._router.navigate([], { queryParams: this.parameters });
+    if(datasource.length>0){
     this.tableData = this.tableData.concat(datasource);
+    this._router.navigate([], { queryParams: this.parameters });  
+    }
   }
   
-  sortBy(heading, order) {
+  sortBy(heading, order, i) {
+    if(order=='asc'){
+      this.sortOrder[i]=false;
+    }
+    else{
+      this.sortOrder[i]=true;
+    }
     this.parameters = {
       limit: 50, sortBy: heading, sortDir: order, startFrom: 0
     };
@@ -130,7 +116,9 @@ export class TableGridComponent implements OnInit, OnChanges {
 }
 
 onScroll(event){
-  var target = $(".table-header")[0];
+    let width = $(".stores-table").width();
+    $(".table-header").width(width);
+    var target = $(".table-header")[0];
     target.scrollTop = event.target.scrollTop;
     target.scrollLeft = event.target.scrollLeft;
 }
