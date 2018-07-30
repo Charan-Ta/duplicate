@@ -3,9 +3,8 @@
     padding: 0;
     list-style: none;
     position: relative;
-    margin-top: 120px;
     height: 400px;
-    overflow: scroll;
+    overflow: auto;
 }
 .divTable{
     display: table;
@@ -59,4 +58,14 @@
 
 .divTableRow:nth-child(even) {
     background-color: #E0EBEF!important;
+}
+
+.table-header{
+    margin-top: 120px; 
+    max-width:100%; 
+    overflow: scroll;
+    display: block;
+}
+.table-header::-webkit-scrollbar{
+    display: none;
 }

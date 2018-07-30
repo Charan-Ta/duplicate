@@ -35,7 +35,18 @@ export class TableGridComponent implements OnInit, OnChanges {
   public getRouteParams() {
     this._route.queryParams.subscribe(params => {
       this.parameters = params;
-      this.getTableDetails();
+      this.attachDataListener();
+    });
+  }
+
+  attachDataListener(){
+    this.serviceCall[this.functionCall](this.parameters).subscribe(res=>{
+      
+    if (!this._tableHeadingNames) {
+      this._tableHeadingNames = Object.keys(res[0]);
+      this._tableHeadingNames = this._tableHeadingNames.splice(1, this._tableHeadingNames.length - 2);
+    }
+      this.tableData= this.tableData.concat(res);
     });
   }
 
@@ -57,30 +68,20 @@ export class TableGridComponent implements OnInit, OnChanges {
   }
 
   public getTableDetails(): Observable<any> | any {
-    if ((((this.tableData.length - this.parameters.startFrom) < 50) && (this.parameters.startFrom != 0))) {
-      return ;
-    } else {
       return this.serviceCall[this.functionCall](this.parameters).do(this.processData);
-    }
   }
 
   public processData = (datasource) => {
     this.count = this.count + 1;
-
-    if (!this._tableHeadingNames) {
-      this._tableHeadingNames = Object.keys(datasource[0]);
-      this._tableHeadingNames = this._tableHeadingNames.splice(1, this._tableHeadingNames.length - 2);
-    }
-
     if (this.count == 1) {
       this.parameters = {
         limit: 50,
         sortBy: this.parameters.sortBy,
         sortDir: this.parameters.sortDir,
-        startFrom: Number(this.parameters['limit']) + Number(this.parameters['startFrom']) - 50
+        startFrom: Number(this.parameters['limit']) + Number(this.parameters['startFrom'])
       };
     }
-    else if (this.count != 1 && (this.parameters.startFrom == (this.tableData.length - this.parameters.limit))) {
+    else if (this.count>1 && (this.parameters.startFrom == (this.tableData.length - this.parameters.limit))) {
       this.parameters = {
         limit: 50,
         sortBy: this.parameters.sortBy,
@@ -96,7 +97,6 @@ export class TableGridComponent implements OnInit, OnChanges {
         startFrom: Final_startFrom
       };
     }
-
     this._router.navigate([], { queryParams: this.parameters });
     this.tableData = this.tableData.concat(datasource);
   }
@@ -127,5 +127,11 @@ export class TableGridComponent implements OnInit, OnChanges {
          this.pressed = false;
      }
    });
+}
+
+onScroll(event){
+  var target = $(".table-header")[0];
+    target.scrollTop = event.target.scrollTop;
+    target.scrollLeft = event.target.scrollLeft;
 }
 }
