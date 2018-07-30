@@ -28,6 +28,7 @@ import { WorkflowComponent } from './Components/admin-navbar/workflow/workflow.c
 import { HttpClientModule } from '@angular/common/http';
 import { PaginationScrollDirective } from './Directives/Pagination-scroll/pagination-scroll.directive';
 import { StoresServiceService } from './Services/Stores-service/stores-service.service';
+import { TableGridComponent } from './Components/reusable-components/table-grid/table-grid.component';
 
 const appRoutes: Routes = [
   {
@@ -159,7 +160,8 @@ const appRoutes: Routes = [
     UsersComponent,
     AuditTrailComponent,
     WorkflowComponent,
-    PaginationScrollDirective
+    PaginationScrollDirective,
+    TableGridComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,18 @@
+<div class="stores-table" id="infinite-scroller" appPaginationScroll scrollPercent="70" [immediateCallback]="true" [scrollCallback]="scrollCallback">
+<div class="divTable">
+        <div class="divTableBody">
+          <div class="divTableRow table-header">
+            <div class="divTableHead" *ngFor="let heading of _tableHeadingNames">
+                <span (click)="sortBy(heading,'asc')" style="cursor: pointer;">&#x23f7;</span>
+                <span (click)="sortBy(heading,'des')" style="cursor: pointer;">&#x23f6;</span>
+                <span class="ui-column-resizer" (mousedown)="onMouseDown($event)"></span>
+                <span>{{ heading }}</span>
+            </div>
+          </div>
+          <div class="divTableRow table-body" *ngFor="let data of tableData">
+            <div class="divTableCell" *ngFor="let heading of _tableHeadingNames">{{data[heading]}}</div>
+          </div>
+        </div>
+    </div>
+</div>
+<p>Total Results : {{tableData.length}}</p>

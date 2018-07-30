@@ -1,24 +1,3 @@
 <h3 id="allstores-title">All Stores</h3>
 <input class="navbar-two-input allstore-search" placeholder="Select Category" style="float: right;" />
-<div class="stores-table" id="infinite-scroller" appPaginationScroll scrollPercent="70" [immediateCallback]="true" [scrollCallback]="scrollCallback">
-    <table>
-        <thead>
-            <tr>
-                <th *ngFor="let heading of _tableHeadingNames">
-                    <span (click)="sortBy(heading,'asc')" style="cursor: pointer;">&#x23f7;</span>
-                    <span (click)="sortBy(heading,'des')" style="cursor: pointer;">&#x23f6;</span>
-                    <span class="ui-column-resizer" (mousedown)="onMouseDown($event)"></span>
-                    <span>{{ heading }}</span>
-                </th>
-            </tr>
-        </thead>
-        <tbody  class="table-body">
-            <tr *ngFor="let store of stores" id="bg">
-                <td *ngFor="let heading of _tableHeadingNames">
-                        <a href="#">{{store[heading]}}</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<p>Total Results : {{stores.length}} </p>
+<table-grid [serviceCall]="_storesservice" [functionCall]="_functionCall"></table-grid>

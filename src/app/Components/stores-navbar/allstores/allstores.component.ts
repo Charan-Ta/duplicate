@@ -1,10 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef, Renderer } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { StoresServiceService } from '../../../Services/Stores-service/stores-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import 'rxjs/add/observable/throw';
 import { } from 'rxjs';
-declare var $: any;
 
 @Component({
   selector: 'app-allstores',
@@ -12,112 +11,11 @@ declare var $: any;
   styleUrls: ['./allstores.component.css']
 })
 export class AllstoresComponent implements OnInit {
-  public stores = [];
-  public scrollCallback;
-  public parameters;
-  public _tableHeadingNames;
-  public count = 0;
-  public start;
-  public pressed;
-  public startX;
-  public startWidth ;
-  constructor(private renderer: Renderer,
-    private _storesservice: StoresServiceService,
-    private _route: ActivatedRoute,
-    private _changeDetectorRef: ChangeDetectorRef,
-    private _router: Router) {
-    this.scrollCallback = this.getStoreDetails.bind(this);
-  }
+  public _functionCall="getStores";
+  constructor(private _storesservice:StoresServiceService) {}
 
   ngOnInit() {
-    this.getRouteParams();
   }
 
-  public getRouteParams() {
-    this._route.queryParams.subscribe(params => {
-      this.parameters = params;
-      this.getStoreDetails();
-    });
-  }
-
-  public getStoreDetails(): Observable<any> | any {
-    if ((((this.stores.length - this.parameters.startFrom) < 50) && (this.parameters.startFrom != 0))) {
-      return ;
-    } else {
-      return this._storesservice.getStores(this.parameters).do(this.processData);
-    }
-  }
-
-  public processData = (datasource) => {
-    this.count = this.count + 1;
-
-    if (!this._tableHeadingNames) {
-      this._tableHeadingNames = Object.keys(datasource[0]);
-      this._tableHeadingNames = this._tableHeadingNames.splice(1, this._tableHeadingNames.length - 2);
-    }
-
-    if (this.count == 1) {
-      this.parameters = {
-        limit: 50,
-        sortBy: this.parameters.sortBy,
-        sortDir: this.parameters.sortDir,
-        startFrom: Number(this.parameters['limit']) + Number(this.parameters['startFrom']) - 50
-      };
-    }
-    else if (this.count != 1 && (this.parameters.startFrom == (this.stores.length - this.parameters.limit))) {
-      this.parameters = {
-        limit: 50,
-        sortBy: this.parameters.sortBy,
-        sortDir: this.parameters.sortDir,
-        startFrom: Number(this.parameters['limit']) + Number(this.parameters['startFrom'])
-      };
-    } else {
-      const Final_startFrom = this.parameters.startFrom;
-      this.parameters = {
-        limit: 50,
-        sortBy: this.parameters.sortBy,
-        sortDir: this.parameters.sortDir,
-        startFrom: Final_startFrom
-      };
-    }
-
-    this._router.navigate([], { queryParams: this.parameters });
-    this.stores = this.stores.concat(datasource);
-
-  }
-
-  private onMouseDown(event){
-  this.start = event.target;
-  this.pressed = true;
-  this.startX = event.x;
-  this.startWidth = $(this.start).parent().width();
-  this.initResizableColumns();
-  }
-
-  private initResizableColumns() {
-     this.renderer.listenGlobal('body', 'mousemove', (event) => {
-        if(this.pressed) {
-           let width = this.startWidth + (event.x - this.startX);
-           $(this.start).parent().css({'min-width': width, 'max-width': width});
-           let index = $(this.start).parent().index() + 1;
-           $('.table-body tr td:nth-child(' + index + ')').css({'min-width': width, 'max-width': width});
-        }
-     });
-     this.renderer.listenGlobal('body', 'mouseup', (event) => {
-     if(this.pressed) {
-         this.pressed = false;
-     }
-   });
-}
-  sortBy(heading, order) {
-    this.parameters = {
-      limit: 50, sortBy: heading, sortDir: order, startFrom: 0
-    };
-    this.stores = [];
-    this.count=1;
-    this._router.navigate([],{queryParams:this.parameters});
-    this._storesservice.getStores(this.parameters).subscribe(res=>{
-      this.stores= this.stores.concat(res);
-    });
-  }
+  
 }
