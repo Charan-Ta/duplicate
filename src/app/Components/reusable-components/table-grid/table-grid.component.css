@@ -3,7 +3,7 @@
     padding: 0;
     list-style: none;
     position: relative;
-    height: 400px;
+    height: 300px;
     overflow: auto;
 }
 
@@ -27,7 +27,7 @@
 
 .divTable {
     display: table;
-    width: 100%;
+    max-width: 100%;
 }
 
 .divTableRow {
@@ -47,9 +47,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    min-width: 100px;
-    max-width: 100px;
-    padding: 3px 10px;
+    padding: 3px;
     position: relative;
 }
 
