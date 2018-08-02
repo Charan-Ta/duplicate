@@ -27,7 +27,6 @@ import { AuditTrailComponent } from './Components/admin-navbar/audit-trail/audit
 import { WorkflowComponent } from './Components/admin-navbar/workflow/workflow.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PaginationScrollDirective } from './Directives/Pagination-scroll/pagination-scroll.directive';
-import { StoresServiceService } from './Services/Stores-service/stores-service.service';
 import { TableGridComponent } from './Components/reusable-components/table-grid/table-grid.component';
 
 const appRoutes: Routes = [
@@ -168,7 +167,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
   ],
-  providers: [StoresServiceService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

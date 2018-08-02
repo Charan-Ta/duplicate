@@ -25,7 +25,6 @@ export class TableGridComponent implements OnInit, OnChanges {
   public columnWidth=[];
   public count = 0;
   constructor(private renderer: Renderer,private _storesservice:StoresServiceService,
-    private _route: ActivatedRoute,
     private _router: Router) {
     this.scrollCallback = this.getTableDetails.bind(this); 
   }
