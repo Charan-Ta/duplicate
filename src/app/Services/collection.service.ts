@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class StoresCollection extends Collection {
   public _url;
-  constructor(private http:HttpClient, private collection:Collection) { 
-    super(["a","b","c","d"],"/stores");
+  constructor(private http:HttpClient) { 
+    super("/stores");
   }
   
   load(parameters):Observable<any> {

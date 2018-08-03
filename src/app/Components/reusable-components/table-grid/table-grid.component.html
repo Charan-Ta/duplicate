@@ -1,22 +1,24 @@
-<div class="divTable table-header">
-  <div class="divTableBody">
-      <div class="divTableRow">
-        <div class="divTableHead" *ngFor="let heading of _tableHeadingNames; let i=index; " [style.minWidth.px]="columnWidth[i]" [style.maxWidth.px]="columnWidth[i]">
-          <span (click)="sortBy(heading,'asc',i)" style="cursor: pointer;" *ngIf="sortOrder[i]==true">&#x23f7;</span>
-          <span (click)="sortBy(heading,'des',i)" style="cursor: pointer;" *ngIf="sortOrder[i]==false">&#x23f6;</span>
-          <span class="ui-column-resizer" (mousedown)="onMouseDown($event)"></span>
-          <span>{{ heading }}</span>
-        </div>
-      </div>
-  </div>
-</div>
-<div class="stores-table" id="infinite-scroller" appPaginationScroll scrollPercent="70" [immediateCallback]="true" [scrollCallback]="scrollCallback" (scroll)="onScroll($event)">
-<div class="divTable">
-        <div class="divTableBody">
-          <div class="divTableRow table-body" *ngFor="let data of tableData">
-            <div class="divTableCell" *ngFor="let heading of _tableHeadingNames; let i=index;" [style.minWidth.px]="columnWidth[i]" [style.maxWidth.px]="columnWidth[i]">{{data[heading]}}</div>
+<div class="tableWrapper">
+  <div class="divTable">
+    <div class="divTableBody">
+        <div class="divTableRow table-header">
+          <div class="divTableHead" *ngFor="let heading of tableHeadingNames; let i=index; " [style.minWidth.px]="columnWidth[i]" [style.maxWidth.px]="columnWidth[i]">
+            <span (click)="sortBy(heading,'asc',i)" style="cursor: pointer;" *ngIf="sortOrder[i]==true">&#x23f7;</span>
+            <span (click)="sortBy(heading,'des',i)" style="cursor: pointer;" *ngIf="sortOrder[i]==false">&#x23f6;</span>
+            <span class="ui-column-resizer" (mousedown)="onMouseDown($event)"></span>
+            <span>{{ heading }}</span>
           </div>
         </div>
+        <div class="table-body" infiniteScroll
+		    [infiniteScrollDistance]="2"
+		    [infiniteScrollThrottle]="500"
+        (scrolled)="handleScroll()"
+        [scrollWindow]="false">
+        <div class="divTableRow" *ngFor="let data of _tableData">
+          <div class="divTableCell" *ngFor="let heading of tableHeadingNames; let i=index;" [style.minWidth.px]="columnWidth[i]" [style.maxWidth.px]="columnWidth[i]">{{data[heading]}}</div>
+        </div>
+        </div>
     </div>
+  </div>
 </div>
-<p>Total Results : {{tableData.length}}</p>
+<p *ngIf="_tableData">Total Results : {{_tableData.length}}</p>

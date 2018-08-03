@@ -26,9 +26,8 @@ import { UsersComponent } from './Components/admin-navbar/users/users.component'
 import { AuditTrailComponent } from './Components/admin-navbar/audit-trail/audit-trail.component';
 import { WorkflowComponent } from './Components/admin-navbar/workflow/workflow.component';
 import { HttpClientModule } from '@angular/common/http';
-import { PaginationScrollDirective } from './Directives/Pagination-scroll/pagination-scroll.directive';
 import { TableGridComponent } from './Components/reusable-components/table-grid/table-grid.component';
-
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 const appRoutes: Routes = [
   {
     path: '',
@@ -159,13 +158,13 @@ const appRoutes: Routes = [
     UsersComponent,
     AuditTrailComponent,
     WorkflowComponent,
-    PaginationScrollDirective,
     TableGridComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
+    InfiniteScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent]

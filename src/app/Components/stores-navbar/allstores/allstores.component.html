@@ -1,3 +1,3 @@
 <h3 id="allstores-title">All Stores</h3>
 <input class="navbar-two-input allstore-search" placeholder="Select Category" style="float: right;" />
-<table-grid></table-grid>
+<table-grid [tableData]="tableData" (lazyLoadData)="lazyLoadData($event)" (sortData)="sortData($event)"></table-grid>
