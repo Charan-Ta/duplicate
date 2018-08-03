@@ -49,7 +49,7 @@ export class TableGridComponent implements OnInit, OnChanges {
       }
       if(this.columnWidth.length==0){
         for(let i=0;i<this.tableHeadingNames.length;i++){
-          this.columnWidth.push(($(window).width()-137)/this.tableHeadingNames.length); 
+          this.columnWidth.push(($(window).width()-17)/this.tableHeadingNames.length); 
         }
       }
   }
@@ -69,20 +69,15 @@ export class TableGridComponent implements OnInit, OnChanges {
           let width = this.startWidth + increment;
           this.selectedindex = $(this.start).parent().index();
           this.columnWidth[this.selectedindex]=width;
-          for(let i=0;i<this.tableHeadingNames.length;i++){
-            if(increment>0){
-              break;
-            }
-            else if(increment<0&&($('.divTableHead').width()<$(window).width()-137)&&i!=this.selectedindex){
-              this.columnWidth[i]=($(window).width()-width-137)/(this.tableHeadingNames.length-1);
-            }
+          if($('.table-header').width()<($(window).width()-17)){
+            this.columnWidth[this.selectedindex+1]= this.columnWidth[this.selectedindex+1]-increment;
           }
         }
       });
       this.renderer.listenGlobal('body', 'mouseup', (event) => {
         if(this.pressed) {
           this.pressed = false;
-          localStorage.setItem("columnWidth",this.columnWidth.join(","));
+          //localStorage.setItem("columnWidth",this.columnWidth.join(","));
       }
     });
   } 

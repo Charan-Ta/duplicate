@@ -1,14 +1,19 @@
 .tableWrapper{
-  margin-top: 120px;
-  display: block;
-  overflow-x:scroll;
+    margin-top: 120px;
+    display: block;
+    overflow-x:auto;
 }
 .divTable {
-    display: table;
+    display: flex;
+}
+
+.divTableBody {
+    display: flex;
+    flex-direction: column;
 }
 
 .divTableRow {
-    display: block;
+    display: flex;
 }
 
 .divTableHeading {
@@ -19,7 +24,6 @@
 .divTableCell,
 .divTableHead {
     border: 1px solid #999999;
-    display: table-cell;
     text-align: center;
     overflow: hidden;
     white-space: nowrap;
@@ -41,9 +45,6 @@
     font-weight: bold;
 }
 
-.divTableBody {
-    display: table-row-group;
-}
 
 .divTableHead span.ui-column-resizer {
     display: block;

@@ -2,7 +2,7 @@
   <div class="divTable">
     <div class="divTableBody">
         <div class="divTableRow table-header">
-          <div class="divTableHead" *ngFor="let heading of tableHeadingNames; let i=index; " [style.minWidth.px]="columnWidth[i]" [style.maxWidth.px]="columnWidth[i]">
+          <div class="divTableHead" *ngFor="let heading of tableHeadingNames; let i=index; " [style.width.px]="columnWidth[i]">
             <span (click)="sortBy(heading,'asc',i)" style="cursor: pointer;" *ngIf="sortOrder[i]==true">&#x23f7;</span>
             <span (click)="sortBy(heading,'des',i)" style="cursor: pointer;" *ngIf="sortOrder[i]==false">&#x23f6;</span>
             <span>{{ heading }}</span>
@@ -15,7 +15,7 @@
         (scrolled)="handleScroll()"
         [scrollWindow]="false">
         <div class="divTableRow" *ngFor="let data of _tableData">
-          <div class="divTableCell" *ngFor="let heading of tableHeadingNames; let i=index;" [style.minWidth.px]="columnWidth[i]" [style.maxWidth.px]="columnWidth[i]">{{data[heading]}}</div>
+          <div class="divTableCell" *ngFor="let heading of tableHeadingNames; let i=index;" [style.width.px]="columnWidth[i]">{{data[heading]}}</div>
         </div>
         </div>
     </div>
