@@ -7,10 +7,10 @@ declare var $: any;
 })
 export class TableGridComponent implements OnInit, OnChanges {
   @Input('tableData')tableData;
+  @Input('columnNames')tableHeadingNames;
   @Output('lazyLoadData') lazyLoadData = new EventEmitter<any>();
   @Output('sortData') sortData = new EventEmitter<any>();
   public columnWidth=[];
-  public tableHeadingNames=[];
   public sortOrder=[];
   public start;
   public pressed=false;
@@ -32,13 +32,18 @@ export class TableGridComponent implements OnInit, OnChanges {
     if(changes.tableData && changes.tableData.currentValue!=undefined){
       this.updateData(changes.tableData.currentValue);
     }
+    if(changes.columnNames && changes.columnNames.currentValue!=undefined){
+      this.updateColumnNames(changes.columnNames.currentValue);
+    }
+  }
+
+  updateColumnNames(res){
+    this.tableHeadingNames=res;
   }
   
   updateData(res){
       this.lazyLoad=false;
       this._tableData=this._tableData.concat(res);
-      this.tableHeadingNames = Object.keys(this._tableData[0]);
-      this.tableHeadingNames = this.tableHeadingNames.splice(1, this.tableHeadingNames.length - 2);
       for(let i=0;i<this.tableHeadingNames.length;i++){
         this.sortOrder.push(true);
       }

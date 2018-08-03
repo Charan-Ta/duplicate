@@ -14,6 +14,7 @@ import { } from 'rxjs';
 export class AllstoresComponent implements OnInit {
   public parameters;
   public tableData;
+  public tableHeadingNames;
   constructor(private collection:Collection,  private _route: ActivatedRoute, private router:Router) {}
 
   ngOnInit() {
@@ -30,6 +31,8 @@ export class AllstoresComponent implements OnInit {
   public processData(parameters){
     this.collection.load(parameters).subscribe(res=>{
       this.tableData = res;
+      this.tableHeadingNames = Object.keys(this.tableData[0]);
+      this.tableHeadingNames = this.tableHeadingNames.splice(1, this.tableHeadingNames.length - 2);
     });
   }
 
