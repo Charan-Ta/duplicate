@@ -6,7 +6,7 @@
             <span (click)="sortBy(heading,'asc',i)" style="cursor: pointer;" *ngIf="sortOrder[i]==true">&#x23f7;</span>
             <span (click)="sortBy(heading,'des',i)" style="cursor: pointer;" *ngIf="sortOrder[i]==false">&#x23f6;</span>
             <span>{{ heading }}</span>
-            <span class="ui-column-resizer" (mousedown)="onMouseDown($event)"></span>
+            <span class="ui-column-resizer" *ngIf="i!=tableHeadingNames.length-1" (mousedown)="onMouseDown($event)"></span>
           </div>
         </div>
         <div class="table-body" infiniteScroll

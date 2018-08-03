@@ -68,9 +68,10 @@ export class TableGridComponent implements OnInit, OnChanges {
           let increment = event.clientX - this.startX;
           let width = this.startWidth + increment;
           this.selectedindex = $(this.start).parent().index();
+          let previousWidth= this.columnWidth[this.selectedindex];
           this.columnWidth[this.selectedindex]=width;
-          if($('.table-header').width()<($(window).width()-17)){
-            this.columnWidth[this.selectedindex+1]= this.columnWidth[this.selectedindex+1]-increment;
+          if($('.table-header').width()<$(window).width()&&previousWidth>width){
+            this.columnWidth[this.selectedindex+1] += previousWidth-width;
           }
         }
       });
