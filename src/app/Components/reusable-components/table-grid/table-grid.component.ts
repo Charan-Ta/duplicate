@@ -59,35 +59,29 @@ export class TableGridComponent implements OnInit, OnChanges {
       this.pressed = true;
       this.startX = event.clientX;
       this.startWidth = $(this.start).parent().width();
-      this.renderer.listenGlobal('body', 'mousemove', (event) => {
-        if(this.pressed) {
-          let width = this.startWidth + (event.clientX - this.startX);
-          this.selectedindex = $(this.start).parent().index() + 1;
-          for(let i=0;i<=this.tableHeadingNames.length;i++){
-            if(i==this.selectedindex-1){
-              this.columnWidth[i]=width;
-            }
-            else{
-              this.columnWidth[i]=($(window).width()-width-137)/(this.tableHeadingNames.length-1);
-            }
-          }
-          $(this.start).parent().css({'min-width': width, 'max-width': width});
-          $('.divTableBody .divTableRow .divTableCell:nth-child(' + this.selectedindex + ')').css({'min-width': width, 'max-width': width});          
-          setTimeout(this.initResizableColumns(),500);
-        }
-      });
+      this.initResizableColumns();
     }
     
     initResizableColumns() {
+      this.renderer.listenGlobal('body', 'mousemove', (event) => {
+        if(this.pressed) {
+          let increment = event.clientX - this.startX;
+          let width = this.startWidth + increment;
+          this.selectedindex = $(this.start).parent().index();
+          this.columnWidth[this.selectedindex]=width;
+          for(let i=0;i<this.tableHeadingNames.length;i++){
+            if(increment>0){
+              break;
+            }
+            else if(increment<0&&($('.divTableHead').width()<$(window).width()-137)&&i!=this.selectedindex){
+              this.columnWidth[i]=($(window).width()-width-137)/(this.tableHeadingNames.length-1);
+            }
+          }
+        }
+      });
       this.renderer.listenGlobal('body', 'mouseup', (event) => {
         if(this.pressed) {
           this.pressed = false;
-          for(let i=0;i<this.tableHeadingNames.length;i++){
-            if(i!=this.selectedindex-1){
-              $('.divTableBody .divTableRow .divTableHead:nth-child(' + i+1 + ')').css({'min-width': this.columnWidth[i], 'max-width': this.columnWidth[i]});
-              $('.divTableBody .divTableRow .divTableCell:nth-child(' + i+1 + ')').css({'min-width': this.columnWidth[i], 'max-width': this.columnWidth[i]});
-            }
-          }
           localStorage.setItem("columnWidth",this.columnWidth.join(","));
       }
     });

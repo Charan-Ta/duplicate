@@ -1,7 +1,7 @@
 .tableWrapper{
   margin-top: 120px;
   display: block;
-  overflow:hidden;
+  overflow-x:scroll;
 }
 .divTable {
     display: table;
