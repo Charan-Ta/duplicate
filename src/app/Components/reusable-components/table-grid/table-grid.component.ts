@@ -49,7 +49,7 @@ export class TableGridComponent implements OnInit, OnChanges {
       }
       if(this.columnWidth.length==0){
         for(let i=0;i<this.tableHeadingNames.length;i++){
-          this.columnWidth.push(($(window).width()-17)/this.tableHeadingNames.length); 
+          this.columnWidth.push(($('.tableWrapper').width()/this.tableHeadingNames.length)); 
         }
       }
   }
@@ -70,7 +70,7 @@ export class TableGridComponent implements OnInit, OnChanges {
           this.selectedindex = $(this.start).parent().index();
           let previousWidth= this.columnWidth[this.selectedindex];
           this.columnWidth[this.selectedindex]=width;
-          if($('.table-header').width()<$(window).width()&&previousWidth>width){
+          if($('.table-header').width()<$('.tableWrapper').width()&&previousWidth>width){
             this.columnWidth[this.selectedindex+1] += previousWidth-width;
           }
         }
