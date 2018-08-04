@@ -76,9 +76,9 @@ export class TableGridComponent implements OnInit, OnChanges {
         }
       });
       this.renderer.listenGlobal('body', 'mouseup', (event) => {
+        localStorage.setItem("columnWidth",this.columnWidth.join(","));
         if(this.pressed) {
           this.pressed = false;
-          localStorage.setItem("columnWidth",this.columnWidth.join(","));
       }
     });
   } 

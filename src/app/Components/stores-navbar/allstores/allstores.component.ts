@@ -48,7 +48,7 @@ export class AllstoresComponent implements OnInit {
 
   public sortData(event){
     if(event){
-      this.parameters={limit:50,startFrom:Number(this.parameters['startFrom']),sortBy:event.column,sortDir:event.order};
+      this.parameters={limit:50,startFrom:0,sortBy:event.column,sortDir:event.order};
       this.router.navigate([],{queryParams:this.parameters});
     }
   }
