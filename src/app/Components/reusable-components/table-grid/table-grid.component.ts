@@ -65,10 +65,12 @@ export class TableGridComponent implements OnInit, OnChanges {
     initResizableColumns() {
       this.renderer.listenGlobal('body', 'mousemove', (event) => {
         if(this.pressed) {
+          this.selectedindex = $(this.start).parent().index();
+          let previousWidth = this.columnWidth[this.selectedindex];
           let increment = event.clientX - this.startX;
           let width = this.startWidth + increment;
-          this.selectedindex = $(this.start).parent().index();
-          let previousWidth= this.columnWidth[this.selectedindex];
+          if(width<40)
+          width=40;
           this.columnWidth[this.selectedindex]=width;
           if($('.table-header').width()<$('.tableWrapper').width()&&previousWidth>width){
             this.columnWidth[this.selectedindex+1] += previousWidth-width;

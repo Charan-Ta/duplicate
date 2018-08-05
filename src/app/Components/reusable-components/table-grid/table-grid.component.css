@@ -6,6 +6,7 @@
 }
 .divTable {
     display: table;
+    border-radius: 4px;
 }
 
 .divTableBody {
@@ -23,20 +24,26 @@
 
 .divTableCell,
 .divTableHead {
-    border: 1px solid #999999;
-    text-align: center;
+    border: 1px solid #EEE;
+    text-align: left;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    padding: 3px;
+    padding: 10px;
     position: relative;
     user-select: none;
+    display: block;
+    min-width: 39px;
 }
 
-.divTableHeading {
-    background-color: #EEE;
-    display: table-header-group;
+.divTableHead {
+    background-color: rgba(0,0,0,0.7);
+    color: #EEE;
     font-weight: bold;
+}
+
+.divTableCell {
+  border: none;
 }
 
 .divTableFoot {
@@ -59,8 +66,19 @@
     border: 1px solid transparent;
 }
 
+.divTableHead span.ui-sort-button {
+    display: block;
+    position: absolute;
+    top: 7px;
+    right: 8px;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    background-color: black;
+}
+
 .divTableRow:nth-child(even) {
-    background-color: #E0EBEF!important;
+    background-color: rgba(192,192,192,0.3)!important;
 }
 
 .table-body {
