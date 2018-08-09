@@ -53,17 +53,11 @@
 }
 
 
-.divTableHead span.ui-column-resizer {
+.ui-column-resizer {
     display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    width: 8px;
-    height: 100%;
-    padding: 0;
-    cursor: e-resize;
     border: 1px solid transparent;
+    padding: 0;
+    width: 0px;
 }
 
 .divTableHead span.ui-sort-button {

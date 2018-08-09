@@ -16,7 +16,10 @@ export class TableGridComponent implements OnInit, OnChanges {
   public pressed=false;
   public lazyLoad=false;
   public startX;
-  public startWidth;
+  public leftColIndex;
+  public rightColIndex;
+  public leftColWidth;
+  public rightColWidth;
   public _tableData=[];
   public selectedindex=0;
   constructor(private renderer: Renderer) { 
@@ -49,7 +52,7 @@ export class TableGridComponent implements OnInit, OnChanges {
       }
       if(this.columnWidth.length==0){
         for(let i=0;i<this.tableHeadingNames.length;i++){
-          this.columnWidth.push(($('.tableWrapper').width()/this.tableHeadingNames.length)); 
+          this.columnWidth.push(($('.tableWrapper').width()-(2*this.tableHeadingNames.length-1))/this.tableHeadingNames.length); 
         }
       }
   }
@@ -57,33 +60,53 @@ export class TableGridComponent implements OnInit, OnChanges {
   onMouseDown(event){
       this.start = event.target;
       this.pressed = true;
-      this.startX = event.clientX;
-      this.startWidth = $(this.start).parent().width();
+      this.startX = event.pageX;
+      this.leftColIndex = $(this.start).parent().index();
+      this.rightColIndex = this.leftColIndex+1; 
+      this.leftColWidth = Number(this.columnWidth[this.leftColIndex]);
+      this.rightColWidth = Number(this.columnWidth[this.rightColIndex]);
+      event.stopPropagation();
+      event.preventDefault();
       this.initResizableColumns();
     }
     
     initResizableColumns() {
+      let minWidth = 40;
       this.renderer.listenGlobal('body', 'mousemove', (event) => {
         if(this.pressed) {
-          this.selectedindex = $(this.start).parent().index();
-          let previousWidth = this.columnWidth[this.selectedindex];
-          let increment = event.clientX - this.startX;
-          let width = this.startWidth + increment;
-          if(width<40)
-          width=40;
-          this.columnWidth[this.selectedindex]=width;
-          if($('.table-header').width()<$('.tableWrapper').width()&&previousWidth>width){
-            this.columnWidth[this.selectedindex+1] += previousWidth-width;
+          var rightWidth = this.rightColWidth - (event.pageX - this.startX);
+          var leftWidth = this.leftColWidth + (event.pageX - this.startX);
+          if(rightWidth < minWidth) {
+              leftWidth = leftWidth + rightWidth - minWidth;
+              rightWidth = minWidth;
+          } else if(leftWidth < minWidth) {
+              rightWidth = leftWidth + rightWidth - minWidth;
+              leftWidth = minWidth;
           }
+          this.columnWidth[this.leftColIndex]=leftWidth;
+          this.columnWidth[this.rightColIndex]=rightWidth;
         }
       });
       this.renderer.listenGlobal('body', 'mouseup', (event) => {
-        localStorage.setItem("columnWidth",this.columnWidth.join(","));
         if(this.pressed) {
+          var rightWidth = this.rightColWidth - (event.pageX - this.startX);
+          var leftWidth = this.leftColWidth + (event.pageX - this.startX);
+          if(rightWidth < minWidth) {
+            leftWidth = leftWidth + rightWidth - minWidth;
+            rightWidth = minWidth;
+          } else if(leftWidth < minWidth) {
+            rightWidth = leftWidth + rightWidth - minWidth;
+            leftWidth = minWidth;
+          }
+          this.columnWidth[this.leftColIndex]=leftWidth;
+          this.columnWidth[this.rightColIndex]=rightWidth;
           this.pressed = false;
+          localStorage.setItem("columnWidth",this.columnWidth.join(","));
       }
     });
-  } 
+  }
+
+    adjustColumnSize(){}
   
     handleScroll() {
     this.lazyLoad=true;
