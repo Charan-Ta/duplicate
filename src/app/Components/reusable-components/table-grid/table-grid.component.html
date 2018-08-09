@@ -4,11 +4,23 @@
         <div class="divTableRow table-header">
          <div *ngFor="let heading of tableHeadingNames; let i=index; " style="display: flex;">
            <div class="divTableHead divTableHeading"  [style.width.px]="columnWidth[i]">
-             <span>{{ heading }}</span>
-             <span class="ui-sort-button" (click)="sortBy(heading,'asc',i)" style="cursor: pointer;" *ngIf="sortOrder[i]==true">&#x23f7;</span>
-             <span class="ui-sort-button" (click)="sortBy(heading,'des',i)" style="cursor: pointer;" *ngIf="sortOrder[i]==false">&#x23f6;</span>
+               <span>{{ heading }}</span>
+               <div class="sort-wrapper" *ngIf="selectedSortColumn!=i">
+                 <span (click)="sortBy(heading,'asc',i)" style="cursor: pointer;">
+                    <fa-icon [icon]="faSortUp"></fa-icon>
+                  </span>
+                  <span (click)="sortBy(heading,'des',i)" style="cursor: pointer;">
+                    <fa-icon [icon]="faSortDown"></fa-icon>
+                 </span>
+               </div>
+               <span class="ui-sort-button" (click)="sortBy(heading,'des',i)" *ngIf="selectedSortColumn==i&&sortingOrder=='asc'" style="cursor: pointer;">
+                  <fa-icon [icon]="faSortUp"></fa-icon>
+                </span>
+                <span class="ui-sort-button" (click)="sortBy(heading,'asc',i)" *ngIf="selectedSortColumn==i&&sortingOrder=='des'" style="cursor: pointer;">
+                    <fa-icon [icon]="faSortDown"></fa-icon>
+                </span>
+               <span class="ui-column-resizer" style="cursor:col-resize;" *ngIf="i!=tableHeadingNames.length-1" (mousedown)="onMouseDown($event)" (drag)="initResizableColumns($event)"></span>
             </div>
-            <div class="ui-column-resizer" style="cursor:col-resize;" *ngIf="i!=tableHeadingNames.length-1" (mousedown)="onMouseDown($event)" (drag)="initResizableColumns($event)"></div>
          </div> 
         </div>
         <div class="table-body" infiniteScroll
@@ -19,7 +31,6 @@
         <div class="divTableRow" *ngFor="let data of _tableData">
          <div *ngFor="let heading of tableHeadingNames; let i=index; " style="display: flex;">
           <div class="divTableCell" [style.width.px]="columnWidth[i]">{{data[heading]}}</div>
-          <div class="ui-column-resizer"></div>
         </div>
         </div>
     </div>

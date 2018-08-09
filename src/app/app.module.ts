@@ -28,6 +28,7 @@ import { WorkflowComponent } from './Components/admin-navbar/workflow/workflow.c
 import { HttpClientModule } from '@angular/common/http';
 import { TableGridComponent } from './Components/reusable-components/table-grid/table-grid.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 const appRoutes: Routes = [
   {
     path: '',
@@ -158,13 +159,14 @@ const appRoutes: Routes = [
     UsersComponent,
     AuditTrailComponent,
     WorkflowComponent,
-    TableGridComponent
+    TableGridComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -28,7 +28,10 @@
     "jquery": "^3.3.1",
     "ngx-infinite-scroll": "^0.8.3",
     "rxjs": "^5.5.6",
-    "zone.js": "^0.8.19"
+    "zone.js": "^0.8.19",
+    "@fortawesome/angular-fontawesome": "^0.1.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.2",
+    "@fortawesome/free-solid-svg-icons": "^5.2.0"
   },
   "devDependencies": {
     "@angular/cli": "~1.7.4",

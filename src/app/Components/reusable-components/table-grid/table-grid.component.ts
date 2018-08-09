@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChange, Input, Renderer, Output, EventEmitter  } from '@angular/core';
+import { faSort, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 declare var $: any;
 @Component({
   selector: 'table-grid',
@@ -11,7 +12,6 @@ export class TableGridComponent implements OnInit, OnChanges {
   @Output('lazyLoadData') lazyLoadData = new EventEmitter<any>();
   @Output('sortData') sortData = new EventEmitter<any>();
   public columnWidth=[];
-  public sortOrder=[];
   public start;
   public pressed=false;
   public lazyLoad=false;
@@ -23,6 +23,11 @@ export class TableGridComponent implements OnInit, OnChanges {
   public rightColWidth;
   public _tableData=[];
   public selectedindex=0;
+  public selectedSortColumn=localStorage.getItem('selectedColumn')||null;
+  public sortingOrder=localStorage.getItem('sortingOrder')||null;;
+  public faSort = faSort;
+  public faSortDown = faCaretDown;
+  public faSortUp = faCaretUp;
   constructor(private renderer: Renderer) { 
   }
 
@@ -55,12 +60,9 @@ export class TableGridComponent implements OnInit, OnChanges {
       else{
        this._tableData=this._tableData.concat(res);  
       }
-      for(let i=0;i<this.tableHeadingNames.length;i++){
-        this.sortOrder.push(true);
-      }
       if(this.columnWidth.length==0){
         for(let i=0;i<this.tableHeadingNames.length;i++){
-          this.columnWidth.push(($('.tableWrapper').width()-(2*this.tableHeadingNames.length-1))/this.tableHeadingNames.length); 
+          this.columnWidth.push($('.tableWrapper').width()/this.tableHeadingNames.length); 
         }
       }
   }
@@ -69,7 +71,7 @@ export class TableGridComponent implements OnInit, OnChanges {
       this.start = event.target;
       this.pressed = true;
       this.startX = event.pageX;
-      this.leftColIndex = $(this.start).parent().index();
+      this.leftColIndex = $(this.start).parent().parent().index();
       this.rightColIndex = this.leftColIndex+1; 
       this.leftColWidth = Number(this.columnWidth[this.leftColIndex]);
       this.rightColWidth = Number(this.columnWidth[this.rightColIndex]);
@@ -84,30 +86,30 @@ export class TableGridComponent implements OnInit, OnChanges {
         if(this.pressed) {
           var rightWidth = this.rightColWidth - (event.pageX - this.startX);
           var leftWidth = this.leftColWidth + (event.pageX - this.startX);
-          if(rightWidth < minWidth) {
-              leftWidth = leftWidth + rightWidth - minWidth;
-              rightWidth = minWidth;
-          } else if(leftWidth < minWidth) {
-              rightWidth = leftWidth + rightWidth - minWidth;
-              leftWidth = minWidth;
+          var oldWidth = this.columnWidth[this.leftColIndex];
+          if(leftWidth < minWidth) {
+            leftWidth = minWidth;
+            rightWidth = leftWidth + rightWidth - minWidth;
           }
-          this.columnWidth[this.leftColIndex]=leftWidth;
-          this.columnWidth[this.rightColIndex]=rightWidth;
+          this.columnWidth[this.leftColIndex]=leftWidth;          
+          if($('.table-header').width()-17<=$('.tableWrapper').width()&& oldWidth>leftWidth){
+            this.columnWidth[this.rightColIndex]=rightWidth;
+          }
         }
       });
       this.renderer.listenGlobal('body', 'mouseup', (event) => {
         if(this.pressed) {
           var rightWidth = this.rightColWidth - (event.pageX - this.startX);
           var leftWidth = this.leftColWidth + (event.pageX - this.startX);
-          if(rightWidth < minWidth) {
-            leftWidth = leftWidth + rightWidth - minWidth;
-            rightWidth = minWidth;
-          } else if(leftWidth < minWidth) {
-            rightWidth = leftWidth + rightWidth - minWidth;
+          var oldWidth = this.columnWidth[this.leftColIndex];
+          if(leftWidth < minWidth) {
             leftWidth = minWidth;
+            rightWidth = leftWidth + rightWidth - minWidth;
           }
-          this.columnWidth[this.leftColIndex]=leftWidth;
-          this.columnWidth[this.rightColIndex]=rightWidth;
+          this.columnWidth[this.leftColIndex]=leftWidth;          
+          if($('.table-header').width()-17<=$('.tableWrapper').width() && oldWidth>leftWidth){
+            this.columnWidth[this.rightColIndex]=rightWidth;
+          }
           this.pressed = false;
           localStorage.setItem("columnWidth",this.columnWidth.join(","));
       }
@@ -121,12 +123,10 @@ export class TableGridComponent implements OnInit, OnChanges {
     
     sortBy(heading, order, i) {
       this.isSorted=true;
-      if(order=='asc'){
-        this.sortOrder[i]=false;
-      }
-      else{
-        this.sortOrder[i]=true;
-      }
+      this.selectedSortColumn=i;
+      this.sortingOrder = order;
+      localStorage.setItem('selectedColumn',this.selectedSortColumn);
+      localStorage.setItem('sortingOrder',this.sortingOrder);
       this.sortData.emit({column:heading,order:order});
     }
 }
