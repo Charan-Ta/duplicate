@@ -62,7 +62,7 @@ export class TableGridComponent implements OnInit, OnChanges {
       }
       if(this.columnWidth.length==0){
         for(let i=0;i<this.tableHeadingNames.length;i++){
-          this.columnWidth.push($('.tableWrapper').width()/this.tableHeadingNames.length); 
+          this.columnWidth.push(($('.tableWrapper').width()-17)/this.tableHeadingNames.length); 
         }
       }
   }
@@ -92,7 +92,7 @@ export class TableGridComponent implements OnInit, OnChanges {
             rightWidth = leftWidth + rightWidth - minWidth;
           }
           this.columnWidth[this.leftColIndex]=leftWidth;          
-          if($('.table-header').width()-17<=$('.tableWrapper').width()&& oldWidth>leftWidth){
+          if($('.table-header').width()<=$('.tableWrapper').width()&& oldWidth>leftWidth){
             this.columnWidth[this.rightColIndex]=rightWidth;
           }
         }
@@ -107,7 +107,7 @@ export class TableGridComponent implements OnInit, OnChanges {
             rightWidth = leftWidth + rightWidth - minWidth;
           }
           this.columnWidth[this.leftColIndex]=leftWidth;          
-          if($('.table-header').width()-17<=$('.tableWrapper').width() && oldWidth>leftWidth){
+          if($('.table-header').width()<=$('.tableWrapper').width() && oldWidth>leftWidth){
             this.columnWidth[this.rightColIndex]=rightWidth;
           }
           this.pressed = false;
