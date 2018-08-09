@@ -15,6 +15,7 @@ export class TableGridComponent implements OnInit, OnChanges {
   public start;
   public pressed=false;
   public lazyLoad=false;
+  public isSorted = false;
   public startX;
   public leftColIndex;
   public rightColIndex;
@@ -46,7 +47,14 @@ export class TableGridComponent implements OnInit, OnChanges {
   
   updateData(res){
       this.lazyLoad=false;
-      this._tableData=this._tableData.concat(res);
+      if(this.isSorted){
+       this._tableData=[]; 
+       this._tableData=this._tableData.concat(res);
+       this.isSorted=false;
+      }
+      else{
+       this._tableData=this._tableData.concat(res);  
+      }
       for(let i=0;i<this.tableHeadingNames.length;i++){
         this.sortOrder.push(true);
       }
@@ -105,8 +113,6 @@ export class TableGridComponent implements OnInit, OnChanges {
       }
     });
   }
-
-    adjustColumnSize(){}
   
     handleScroll() {
     this.lazyLoad=true;
@@ -114,8 +120,7 @@ export class TableGridComponent implements OnInit, OnChanges {
     }
     
     sortBy(heading, order, i) {
-      this._tableData=[];
-      //toggling icon
+      this.isSorted=true;
       if(order=='asc'){
         this.sortOrder[i]=false;
       }

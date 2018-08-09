@@ -42,6 +42,8 @@ export class AllstoresComponent implements OnInit {
   sortData(event){
     this.collection.sort(event.column,event.order).subscribe(res=>{
       this.tableData=res;
+      if(this.tableData.length>0)
+        this.collection.updateURLParams();
     });
   }
   
