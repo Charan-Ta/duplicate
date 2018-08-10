@@ -32,7 +32,7 @@
     position: relative;
     user-select: none;
     display: block;
-    min-width: 39px;
+    min-width: 100px;
 }
 
 .divTableHead {

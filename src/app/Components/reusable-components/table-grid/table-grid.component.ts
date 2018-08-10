@@ -73,43 +73,31 @@ export class TableGridComponent implements OnInit, OnChanges {
       this.startX = event.pageX;
       this.leftColIndex = $(this.start).parent().parent().index();
       this.rightColIndex = this.leftColIndex+1; 
-      this.leftColWidth = Number(this.columnWidth[this.leftColIndex]);
-      this.rightColWidth = Number(this.columnWidth[this.rightColIndex]);
+      this.leftColWidth = parseFloat(this.columnWidth[this.leftColIndex]);
+      this.rightColWidth = parseFloat(this.columnWidth[this.rightColIndex]);
       event.stopPropagation();
       event.preventDefault();
       this.initResizableColumns();
     }
     
     initResizableColumns() {
-      let minWidth = 40;
+      let minWidth = 100;
       this.renderer.listenGlobal('body', 'mousemove', (event) => {
         if(this.pressed) {
           var rightWidth = this.rightColWidth - (event.pageX - this.startX);
           var leftWidth = this.leftColWidth + (event.pageX - this.startX);
-          var oldWidth = this.columnWidth[this.leftColIndex];
           if(leftWidth < minWidth) {
-            leftWidth = minWidth;
             rightWidth = leftWidth + rightWidth - minWidth;
+            leftWidth = minWidth;
+          }
+          if($('.table-header').width()<=$('.tableWrapper').width()){
+            this.columnWidth[this.rightColIndex] = rightWidth;
           }
           this.columnWidth[this.leftColIndex]=leftWidth;          
-          if($('.table-header').width()<=$('.tableWrapper').width()&& oldWidth>leftWidth){
-            this.columnWidth[this.rightColIndex]=rightWidth;
-          }
         }
       });
       this.renderer.listenGlobal('body', 'mouseup', (event) => {
         if(this.pressed) {
-          var rightWidth = this.rightColWidth - (event.pageX - this.startX);
-          var leftWidth = this.leftColWidth + (event.pageX - this.startX);
-          var oldWidth = this.columnWidth[this.leftColIndex];
-          if(leftWidth < minWidth) {
-            leftWidth = minWidth;
-            rightWidth = leftWidth + rightWidth - minWidth;
-          }
-          this.columnWidth[this.leftColIndex]=leftWidth;          
-          if($('.table-header').width()<=$('.tableWrapper').width() && oldWidth>leftWidth){
-            this.columnWidth[this.rightColIndex]=rightWidth;
-          }
           this.pressed = false;
           localStorage.setItem("columnWidth",this.columnWidth.join(","));
       }

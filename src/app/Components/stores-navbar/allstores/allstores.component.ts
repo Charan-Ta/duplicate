@@ -25,7 +25,7 @@ export class AllstoresComponent implements OnInit {
     this.tableData=res;
     if(this.tableData){
       this.tableHeadingNames = Object.keys(this.tableData[0]);
-      this.tableHeadingNames = this.tableHeadingNames.splice(1, this.tableHeadingNames.length - 6);
+      this.tableHeadingNames = this.tableHeadingNames.splice(1, this.tableHeadingNames.length - 2);
     }
   }
 
