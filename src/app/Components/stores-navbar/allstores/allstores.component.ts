@@ -12,15 +12,27 @@ export class AllstoresComponent implements OnInit {
   public parameters;
   public tableData;
   public tableHeadingNames;
+  public tableConfig;
   constructor(private collection:Collection) {}
 
   ngOnInit() {
+    this.setTableConfig();
     this.collection.getURLParams();
     this.collection.load().subscribe(res=>{
       this.processData(res);
     });
   }
   
+  setTableConfig(){
+    this.tableConfig = {
+      tableHeight: 300,//in px
+      tableWidth: 100,// in %
+      cellPadding: 15,// in px
+      cellMinWidth: 100,// in px
+      resize: true,
+      sort: true
+    }
+  }
   processData(res){
     this.tableData=res;
     if(this.tableData){

@@ -9,6 +9,7 @@ declare var $: any;
 export class TableGridComponent implements OnInit, OnChanges {
   @Input('tableData')tableData;
   @Input('columnNames')tableHeadingNames;
+  @Input('config')tableConfig;
   @Output('lazyLoadData') lazyLoadData = new EventEmitter<any>();
   @Output('sortData') sortData = new EventEmitter<any>();
   public columnWidth=[];
@@ -44,6 +45,27 @@ export class TableGridComponent implements OnInit, OnChanges {
     if(changes.columnNames && changes.columnNames.currentValue!=undefined){
       this.updateColumnNames(changes.columnNames.currentValue);
     }
+    if(changes.tableConfig && changes.tableConfig.currentValue!=undefined){
+      this.setTableConfig(changes.tableConfig.currentValue);
+    }
+  }
+
+  setTableConfig(res){
+    this.tableConfig=res;
+    //Setting Default Parameters if the user hasn't passed any of the following
+    if(!this.tableConfig.tableHeight)
+    this.tableConfig.tableHeight=300;//in px
+    if(!this.tableConfig.tableWidth)
+    this.tableConfig.tableWidth=100;//in %
+    if(!this.tableConfig.cellPadding)
+    this.tableConfig.cellPadding=10;// in px
+    if(!this.tableConfig.cellMinWidth)
+    this.tableConfig.cellMinWidth=100;// in px
+    if(!this.tableConfig.resize)
+    this.tableConfig.resize=true;// boolean
+    if(!this.tableConfig.sort)
+    this.tableConfig.sort=true;// boolean
+    
   }
 
   updateColumnNames(res){
