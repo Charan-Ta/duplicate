@@ -1,6 +1,6 @@
 <div class="filter">
   <fa-icon style="margin-right: 5px; color: #BDBDBD; font-size: 18px;" [icon]="faFilter"></fa-icon>
   <ul class="tag-list" #tag_list></ul>
-  <input type="text" class="search-box" (input)="showSuggestions($event)" placeholder="Apply Filter" #main_input>
-  <ul class="suggestion-box" id="suggestion_box" #suggestion_box></ul>
+  <input type="text" class="search-box" (input)="showSuggestions($event)" (focus)="showSuggestions($event)" placeholder="Apply Filter" #main_input>
+  <ul class="suggestion-box" id="suggestion_box" [style.left.px]="rect?.left" #suggestion_box></ul>
 </div>

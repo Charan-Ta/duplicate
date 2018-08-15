@@ -13,37 +13,9 @@ export class AllstoresComponent implements OnInit {
   public tableData;
   public tableHeadingNames;
   public tableConfig;
-  public autosuggestData;
   constructor(private collection:Collection) {}
 
   ngOnInit() {
-    this.autosuggestData={
-      suggestions: [
-        {
-          id: "QT1",
-          name: "class",
-          autosuggest: "true",
-          values: ["1", "2", "3", "4"]
-        },
-        {
-          id: "QT2",
-          name: "core_skill",
-          autosuggest: "true",
-          values: ["core_skill_1", "core_skill_2", "core_skill_3", "core_skill_4"]
-        },
-        {
-          id: "QT3",
-          name: "unique_skill",
-          autosuggest: "true",
-          values: ["unique_skill_1","unique_skill_2","unique_skill_3","unique_skill_4"]
-        },
-        {
-          id: "QT4",
-          name: "qCode",
-          autosuggest: "true",
-          values: ["11", "12", "22", "44"]
-        }
-      ]};
     this.setTableConfig();
     this.collection.getURLParams();
     this.collection.load().subscribe(res=>{
@@ -85,6 +57,10 @@ export class AllstoresComponent implements OnInit {
       if(this.tableData.length>0)
         this.collection.updateURLParams();
     });
+  }
+
+  filterData(event){
+    console.log(event);
   }
   
 }
