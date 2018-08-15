@@ -84,7 +84,7 @@ export class TableGridComponent implements OnInit, OnChanges {
       }
       if(this.columnWidth.length==0){
         for(let i=0;i<this.tableHeadingNames.length;i++){
-          this.columnWidth.push(($('.tableWrapper').width()-17)/this.tableHeadingNames.length); 
+          this.columnWidth.push(($('.tableWrapper').width())/this.tableHeadingNames.length); 
         }
       }
   }
@@ -103,7 +103,7 @@ export class TableGridComponent implements OnInit, OnChanges {
     }
     
     initResizableColumns() {
-      let minWidth = 100;
+      let minWidth = this.tableConfig.cellMinWidth;
       this.renderer.listenGlobal('body', 'mousemove', (event) => {
         if(this.pressed) {
           var rightWidth = this.rightColWidth - (event.pageX - this.startX);

@@ -27,6 +27,7 @@ import { AuditTrailComponent } from './Components/admin-navbar/audit-trail/audit
 import { WorkflowComponent } from './Components/admin-navbar/workflow/workflow.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TableGridComponent } from './Components/reusable-components/table-grid/table-grid.component';
+import { FilterComponent } from './Components/reusable-components/filter/filter.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 const appRoutes: Routes = [
@@ -160,6 +161,7 @@ const appRoutes: Routes = [
     AuditTrailComponent,
     WorkflowComponent,
     TableGridComponent,
+    FilterComponent,
   ],
   imports: [
     BrowserModule,
