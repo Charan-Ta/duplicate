@@ -12,6 +12,7 @@ export abstract class Collection {
   abstract updateURLParams();  
   abstract makeURL();
   abstract load():Observable<any>;
-  abstract loadNext():Observable<any>;
-  abstract sort(sortBy:string,sortOrder:string):Observable<any>;
+  abstract loadNext(isFiltered:boolean,filter:object):Observable<any>;
+  abstract sort(sortBy:string,sortOrder:string,isFiltered:boolean,filter:object):Observable<any>;
+  abstract filter(filter:object):Observable<any>;
 }

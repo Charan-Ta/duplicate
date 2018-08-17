@@ -10,9 +10,11 @@ import {StoresCollection} from '../../../Services/collection.service';
 })
 export class AllstoresComponent implements OnInit {
   public parameters;
-  public tableData;
+  public tableData=[];
   public tableHeadingNames;
   public tableConfig;
+  public isFiltered=false;
+  public filter;
   constructor(private collection:Collection) {}
 
   ngOnInit() {
@@ -43,8 +45,8 @@ export class AllstoresComponent implements OnInit {
 
   lazyLoadData(event){
     if(event){
-      this.collection.loadNext().subscribe(res=>{
-        this.tableData=res;
+      this.collection.loadNext(this.isFiltered,this.filter).subscribe(res=>{
+        this.tableData=this.tableData.concat(res);
         if(this.tableData.length>0)
         this.collection.updateURLParams();
       });
@@ -52,15 +54,23 @@ export class AllstoresComponent implements OnInit {
   }
 
   sortData(event){
-    this.collection.sort(event.column,event.order).subscribe(res=>{
-      this.tableData=res;
+    this.collection.sort(event.column,event.order,this.isFiltered,this.filter).subscribe(res=>{
+      this.tableData=[];
+      this.tableData=this.tableData.concat(res);
       if(this.tableData.length>0)
         this.collection.updateURLParams();
     });
   }
 
   filterData(event){
-    console.log(event);
+      this.isFiltered=true;      
+      this.filter = event;
+      this.collection.filter(event).subscribe(res=>{
+        this.tableData=[];
+        this.tableData=this.tableData.concat(res);
+        if(this.tableData.length>0)
+          this.collection.updateURLParams();
+      });
   }
   
 }

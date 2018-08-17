@@ -10,13 +10,13 @@ export class TableGridComponent implements OnInit, OnChanges {
   @Input('tableData')tableData;
   @Input('columnNames')tableHeadingNames;
   @Input('config')tableConfig;
+  @Input('filterData')filterData;
   @Output('lazyLoadData') lazyLoadData = new EventEmitter<any>();
   @Output('sortData') sortData = new EventEmitter<any>();
   public columnWidth=[];
   public start;
   public pressed=false;
   public lazyLoad=false;
-  public isSorted = false;
   public startX;
   public leftColIndex;
   public rightColIndex;
@@ -39,11 +39,11 @@ export class TableGridComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes:{[propKey: string]:SimpleChange}){
-    if(changes.tableData && changes.tableData.currentValue!=undefined){
-      this.updateData(changes.tableData.currentValue);
-    }
     if(changes.columnNames && changes.columnNames.currentValue!=undefined){
       this.updateColumnNames(changes.columnNames.currentValue);
+    }
+    if(changes.tableData && changes.tableData.currentValue!=undefined){
+      this.updateData(changes.tableData.currentValue);
     }
     if(changes.tableConfig && changes.tableConfig.currentValue!=undefined){
       this.setTableConfig(changes.tableConfig.currentValue);
@@ -73,16 +73,9 @@ export class TableGridComponent implements OnInit, OnChanges {
   }
   
   updateData(res){
-      this.lazyLoad=false;
-      if(this.isSorted){
-       this._tableData=[]; 
-       this._tableData=this._tableData.concat(res);
-       this.isSorted=false;
-      }
-      else{
-       this._tableData=this._tableData.concat(res);  
-      }
-      if(this.columnWidth.length==0){
+      this.lazyLoad=false; 
+      this._tableData=res;  
+      if(this.columnWidth.length==0&&this.tableHeadingNames){
         for(let i=0;i<this.tableHeadingNames.length;i++){
           this.columnWidth.push(($('.tableWrapper').width())/this.tableHeadingNames.length); 
         }
@@ -132,7 +125,6 @@ export class TableGridComponent implements OnInit, OnChanges {
     }
     
     sortBy(heading, order, i) {
-      this.isSorted=true;
       this.selectedSortColumn=i;
       this.sortingOrder = order;
       localStorage.setItem('selectedColumn',this.selectedSortColumn);
